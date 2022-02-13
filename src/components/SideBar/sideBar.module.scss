@@ -1,14 +1,15 @@
 .menuBar {
   .logoMenuBar {
     padding: 1.25rem;
-    span {
-      display: block;
-      font-size: 0.5rem;
-      font-weight: 600;
-      margin-top: 0.7rem;
-      color: var(--gray-100);
-      //padding: 2rem 0 0 0;
-    }
+  }
+
+  > span {
+    display: block;
+    font-size: 0.5rem;
+    font-weight: 600;
+    margin-top: 0.7rem;
+    color: var(--gray-100);
+    padding: 0 16px;
   }
 }
 .sideBar {
@@ -24,7 +25,7 @@
   font-weight: 500;
   font-size: 14px;
   color: var(--blue);
-  .active::after{
+  .active::after {
     content: "";
     height: 24px;
     width: 3px;
@@ -34,7 +35,7 @@
     right: 0;
     top: 11px;
     background: var(--blue);
-}
+  }
   .itemIconMenuBar {
     min-width: 35px;
     .iconMenuBar {
