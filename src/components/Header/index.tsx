@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import style from "./header.module.scss";
-import avatar from "../../assets/avatar.svg";
+import logo from "../../assets/logo.svg";
 import Image from "next/image";
 import { Box } from "@mui/material";
 
@@ -26,6 +26,7 @@ export function Header({ drawerWidth, handleDrawerToggle }: HeaderProps) {
         ml: { sm: `${drawerWidth}px` },
       }}
     >
+ 
       <IconButton
         color="inherit"
         aria-label="open drawer"
@@ -35,13 +36,11 @@ export function Header({ drawerWidth, handleDrawerToggle }: HeaderProps) {
       >
         <MenuIcon />
       </IconButton>
-      <div className={style.content}>
-        <Image src={avatar} alt="Avatar" width={57} height={57} />
-        <div className={style.welcome}>
-          <h1>Bem vindo(a) 👋</h1>
-          <span>Ranqueamento de Palavras Chave</span>
-        </div>
+
+      <div className={style.logoMenuBar}>
+        <Image src={logo} alt="Logo" width={36} height={36} />
       </div>
+
     </Box>
   );
 }

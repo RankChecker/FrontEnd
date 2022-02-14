@@ -8,6 +8,9 @@ import { CardRanking } from "../CardRanking";
 import { FormSearch } from "../FormSearch";
 import { Header } from "../Header";
 import { SideBar } from "../SideBar";
+import { TableComponent } from "../Table/Table";
+import avatar from "../../assets/avatar.jpeg";
+import Image from "next/image";
 import style from "./dashboard.module.scss";
 
 export const Dashboard = () => {
@@ -22,7 +25,10 @@ export const Dashboard = () => {
 
   const getInitialData = async () => {
     const { data } = await ApiService.get("/status");
-    setKeywordsStatus(data);
+    if(data.keywords){
+      const keywords = revertData(data.keywords);
+      setKeywordsStatus({...data,keywords})
+    }else setKeywordsStatus(data);
     if (data.status) setProgress(data.status);
   };
 
@@ -30,10 +36,17 @@ export const Dashboard = () => {
     getInitialData();
   }, []);
 
+  const revertData = (keywords : ISearchStatus['keywords']) =>{
+    const reverse = keywords.reverse();
+    const lastItem = reverse.findIndex((keywords) => keywords.status);
+    return keywords.slice(lastItem -1,keywords.length);
+  }
+
   useEffect(() => {
     if (!socket) return;
     socket.on("searchStatus", (searchStatus: ISearchStatus) => {
-      setKeywordsStatus(searchStatus);
+      const keywords = revertData(searchStatus.keywords);
+      setKeywordsStatus({...searchStatus,keywords});
       setProgress(searchStatus.status);
     });
 
@@ -62,6 +75,13 @@ export const Dashboard = () => {
           marginLeft: "auto",
         }}
       >
+        <div className={style.welcomeSection}>
+          <Image src={avatar} alt="Avatar" width={57} height={57} className={style.avatar}/>
+          <div className={style.welcome}>
+            <h1>Bem vindo(a) 👋</h1>
+            <span>Ranqueamento de Palavras Chave</span>
+          </div>
+        </div>
         {keywordsStatus.message && <FormSearch />}
         {keywordsStatus.keywords && (
           <>
@@ -71,6 +91,7 @@ export const Dashboard = () => {
               url={keywordsStatus.client}
               progress={progress}
             />
+            <TableComponent keywords={keywordsStatus.keywords} />
           </>
         )}
       </Box>
