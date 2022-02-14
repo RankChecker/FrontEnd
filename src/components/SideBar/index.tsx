@@ -7,31 +7,18 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import Toolbar from "@mui/material/Toolbar";
-import { Header } from "../Header";
-import { FormSearch } from "../FormSearch";
-import { CardRanking } from "../CardRanking";
 import style from "./sideBar.module.scss";
 import logo from "../../assets/logo.svg";
 import Image from "next/image";
 const drawerWidth = 240;
 
 interface Props {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
+  mobileOpen: boolean;
+  handleDrawerToggle: () => void;
   window?: () => Window;
 }
 
-export function ResponsiveDrawer(props: Props) {
-  const { window } = props;
-  const [mobileOpen, setMobileOpen] = React.useState(false);
-
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
-
+export function SideBar({ mobileOpen, handleDrawerToggle, window }: Props) {
   const drawer = (
     <div className={style.menuBar}>
       {
@@ -60,10 +47,6 @@ export function ResponsiveDrawer(props: Props) {
   return (
     <Box sx={{ display: "flex" }} className={style.sideBar}>
       <CssBaseline />
-      <Header
-        drawerWidth={drawerWidth}
-        handleDrawerToggle={handleDrawerToggle}
-      />
       <Box
         component="nav"
         sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
@@ -100,21 +83,6 @@ export function ResponsiveDrawer(props: Props) {
         >
           {drawer}
         </Drawer>
-      </Box>
-      <Box
-        component="main"
-        sx={{
-          flexGrow: 1,
-          p: 3,
-          width: { sm: `calc(100% - ${drawerWidth}px)` },
-        }}
-      >
-        <Toolbar />
-        <FormSearch />
-        <Toolbar />
-        <span className={style.titleSection}>Gerando Relatório</span>
-        <CardRanking />
-        <CardRanking />
       </Box>
     </Box>
   );

@@ -1,5 +1,4 @@
 .formContent {
-  padding: 2rem 0;
   h3 {
     font-size: 48px;
     color: var(--black);
@@ -12,12 +11,12 @@
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       grid-gap: 2rem;
-      .lastInput{
+      .lastInput {
         grid-column-start: 1;
         grid-column-end: 3;
       }
     }
-    
+
     button {
       margin-top: 3rem;
       width: 186px;
