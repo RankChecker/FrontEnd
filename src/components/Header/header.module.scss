@@ -1,24 +1,17 @@
-.header{
-    box-shadow: none;
-    background-color: #fff;
-    .content{
-        display: flex;
-        align-items: center;
-        padding: 1rem 0;
+.header {
+  box-shadow: none;
+  background-color: #fff;
+  display: flex;
+  justify-content: space-between;
+  .logoMenuBar {
+    padding: 1rem 0;
+    display: none;
+  }
 
-        .welcome{
-            padding-left: 1rem;
-            h1{
-                font-size: 24px;
-                color: var(--black);
-                line-height: 52px;
-            }            
-            span{
-                display: block;
-                font-size: 14px;
-                color: var(--gray-100);
-            }
-        }
-
+  @media screen and (max-width: 768px) {
+    .logoMenuBar{
+      display: block;
     }
+  }
+
 }
