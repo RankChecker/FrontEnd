@@ -79,6 +79,16 @@ export const Dashboard = () => {
 
   useEffect(() => {
     if (!socket) return;
+    socket.on("reconnect", () => {
+      if (dialog.type === "error" && dialog.open)
+        setDialog({ ...dialog, open: false });
+    });
+
+    socket.on("connect", () => {
+      if (dialog.type === "error" && dialog.open)
+        setDialog({ ...dialog, open: false });
+    });
+
     socket.on("searchStatus", (searchStatus: ISearchStatus) => {
       const keywords = revertData(searchStatus.keywords);
       setKeywordsStatus({ ...searchStatus, keywords });
