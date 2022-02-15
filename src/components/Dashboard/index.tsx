@@ -19,6 +19,7 @@ interface IDialog {
   type: "success" | "error" | "info";
   title: string;
   text: string;
+  hideCloseButton?: boolean;
 }
 
 export const Dashboard = () => {
@@ -32,14 +33,24 @@ export const Dashboard = () => {
     type: "success",
     title: "",
     text: "",
+    hideCloseButton: false,
   });
 
   const handleDialog = (
     title: string,
     text: string,
     type: "success" | "error" | "info",
-    open?: boolean
-  ) => setDialog({ ...dialog, open: open ?? !dialog.open, text, title, type });
+    open?: boolean,
+    hideCloseButton = false
+  ) =>
+    setDialog({
+      ...dialog,
+      open: open ?? !dialog.open,
+      text,
+      title,
+      type,
+      hideCloseButton,
+    });
   const closeDialog = () => setDialog({ ...dialog, open: false });
 
   const handleDrawerToggle = () => setMobileOpen(!mobileOpen);
@@ -89,6 +100,7 @@ export const Dashboard = () => {
         "Perdemos a conexão :(",
         "Aguarde enquanto nosso serviço tenta se reconectar...",
         "error",
+        true,
         true
       );
     });
@@ -145,6 +157,7 @@ export const Dashboard = () => {
         title={dialog.title}
         text={dialog.text}
         type={dialog.type}
+        hideButton={dialog.hideCloseButton}
       />
     </>
   );
