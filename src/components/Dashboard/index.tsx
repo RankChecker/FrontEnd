@@ -23,7 +23,9 @@ interface IDialog {
 }
 
 export const Dashboard = () => {
-  const socket = useSocket("https://rankcheckerapp.herokuapp.com");
+  const socket = useSocket(
+    process.env.NEXT_PUBLIC_API_PATH ?? "https://rankcheckerapp.herokuapp.com"
+  );
   const drawerWidth = 240;
   const [keywordsStatus, setKeywordsStatus] = useState({} as ISearchStatus);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -72,7 +74,7 @@ export const Dashboard = () => {
     const lastItem = keywords.findIndex(
       (keywords) => keywords.status === undefined
     );
-    const length = lastItem !== -1 ? lastItem + 1 : 2;
+    const length = lastItem > 1 ? lastItem + 1 : 2;
     const filtered = keywords.slice(1, length);
     return filtered.reverse();
   };
