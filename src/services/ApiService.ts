@@ -1,5 +1,5 @@
 import axios from "axios";
 
 export const ApiService = axios.create({
-  baseURL: "https://rankcheckerapp.herokuapp.com",
+  baseURL: process.env.NEXT_PUBLIC_API_PATH,
 });
