@@ -13,6 +13,7 @@ import avatar from "../../assets/avatar.jpeg";
 import Image from "next/image";
 import style from "./dashboard.module.scss";
 import { AppDialog } from "../Dialog";
+import { useSearchContext } from "../../contexts/SearchContext";
 
 interface IDialog {
   open: boolean;
@@ -26,6 +27,7 @@ export const Dashboard = () => {
   const socket = useSocket(
     process.env.NEXT_PUBLIC_API_PATH ?? "https://rankcheckerapp.herokuapp.com"
   );
+  const searchContext = useSearchContext();
   const drawerWidth = 240;
   const [keywordsStatus, setKeywordsStatus] = useState({} as ISearchStatus);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -115,6 +117,7 @@ export const Dashboard = () => {
         true,
         true
       );
+      searchContext.handleSearchError();
     });
   }, [socket]);
 

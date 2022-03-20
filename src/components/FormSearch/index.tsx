@@ -1,11 +1,12 @@
 import style from "./formSearch.module.scss";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import { FormEvent, useRef, useState } from "react";
-import { TextareaAutosize } from "@mui/material";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import { ApiService } from "../../services/ApiService";
+import { useSearchContext } from "../../contexts/SearchContext";
 
 export function FormSearch() {
+  const SearchContext = useSearchContext();
   const url = useRef<HTMLInputElement>(null);
   const client = useRef<HTMLInputElement>(null);
   const keywords = useRef<HTMLInputElement>(null);
@@ -15,6 +16,13 @@ export function FormSearch() {
     keywords: null,
   });
 
+  useEffect(() => {
+    if (SearchContext.search.status === "error") {
+      const { url, keywords, client } = SearchContext.search;
+      sendSearch(url, client, keywords);
+    }
+  }, [SearchContext.search]);
+
   const handleFormSubmit = async (event: FormEvent) => {
     event.preventDefault();
     if (!url.current.value || /\/|http?s|www/.test(url.current.value))
@@ -23,10 +31,29 @@ export function FormSearch() {
     if (!keywords.current.value)
       return setErrors({ ...errors, keywords: true });
 
-    await ApiService.post("/search", {
-      url: url.current.value,
+    SearchContext.setSearch({
       client: client.current.value,
+      url: url.current.value,
       keywords: keywords.current.value.split(/\r?\n/),
+      status: "runing",
+    });
+
+    await sendSearch(
+      url.current.value,
+      client.current.value,
+      keywords.current.value.split(/\r?\n/)
+    );
+  };
+
+  const sendSearch = async (
+    url: string,
+    client: string,
+    keywords: string[]
+  ) => {
+    await ApiService.post("/search", {
+      url,
+      client,
+      keywords,
     });
   };
 
