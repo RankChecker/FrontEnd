@@ -1,8 +1,13 @@
-import {AppProps} from "next/app";
-import "../styles/global.scss"
+import { AppProps } from "next/app";
+import { SearchContextProvider } from "../contexts/SearchContext";
+import "../styles/global.scss";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+  return (
+    <SearchContextProvider>
+      <Component {...pageProps} />
+    </SearchContextProvider>
+  );
 }
 
-export default MyApp
+export default MyApp;
